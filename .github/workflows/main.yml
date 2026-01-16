@@ -10,11 +10,25 @@ jobs:
     runs-on: ubuntu-latest
  
     steps:
-      - name: Checkout code
+      - name: Checkout source code
         uses: actions/checkout@v4
  
-      - name: Run a sample script
-        run: echo "CI pipeline running successfully!"
+      - name: Build step
+        run: |
+          echo "Building the application..."
+          mkdir build
+          echo "Build completed" > build/output.txt
  
-      - name: List files
-        run: ls -la
+      - name: Test step
+        run: |
+          echo "Running tests..."
+          if [ -f build/output.txt ]; then
+            echo "Test passed ✅"
+          else
+            echo "Test failed ❌"
+            exit 1
+          fi
+ 
+      - name: Final success message
+        run: echo "CI pipeline executed successfully 🎉"
+ 
